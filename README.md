@@ -204,3 +204,4 @@ This creates:
 - **Password:** `Demo1234`
 
 along with 6 demo habits (💧 Drink 2L Water, 💻 Practice Coding, 🏋️ Gym Workout, 📚 Read 20 Pages, 🧘 Meditation, 😴 Sleep Before 11 PM) and ~6 weeks of randomized-but-plausible completion history, so the dashboard, calendar, and analytics all have real data to display immediately. The seed script only runs when explicitly invoked — it never runs automatically on server start, and it clears any prior demo user data before recreating it.
+"# habit-tracker" 
