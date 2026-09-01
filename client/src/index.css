@@ -1,0 +1,249 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------
+   Design tokens
+   One accent (indigo) drives every interactive element: buttons, the
+   active nav state, focus rings, progress bars and single-series chart
+   marks. Data-identity colors (per-habit) live in utils/constants.js as
+   a fixed-order categorical palette, kept separate from this UI accent.
+------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  --accent-50: #eef2ff;
+  --accent-100: #e0e7ff;
+  --accent-200: #c7d2fe;
+  --accent-300: #a5b4fc;
+  --accent-400: #818cf8;
+  --accent-500: #6366f1;
+  --accent-600: #4f46e5;
+  --accent-700: #4338ca;
+  --accent-800: #3730a3;
+  --accent-900: #312e81;
+  --accent-950: #1e1b4b;
+
+  /* Chart chrome - light */
+  --chart-grid: #e7e5e4;
+  --chart-axis: #cbd5e1;
+  --chart-tick: #94a3b8;
+  --chart-tooltip-bg: #ffffff;
+  --chart-tooltip-border: #e2e8f0;
+  --chart-tooltip-text: #1e293b;
+
+  /* Status (reserved meaning, never reused for a data series) */
+  --status-good: #16a34a;
+  --status-warning: #d97706;
+  --status-critical: #dc2626;
+}
+
+html.dark {
+  color-scheme: dark;
+
+  --chart-grid: #27272a;
+  --chart-axis: #3f3f46;
+  --chart-tick: #71717a;
+  --chart-tooltip-bg: #18181b;
+  --chart-tooltip-border: #3f3f46;
+  --chart-tooltip-text: #f1f5f9;
+
+  --status-good: #22c55e;
+  --status-warning: #f59e0b;
+  --status-critical: #f87171;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100;
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Baseline: every interactive element gets a consistent, smooth transition */
+a,
+button,
+input,
+select,
+textarea,
+[role='button'] {
+  transition-property: color, background-color, border-color, box-shadow, transform, opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 180ms;
+}
+
+/* Consistent focus ring everywhere, keyboard-first */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role='button']:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent-500);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.35);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.55);
+}
+
+/* Progress bar fill animation */
+.progress-fill {
+  transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Simple fade-in for cards/panels */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-in {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.pop-in {
+  animation: popIn 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes checkPop {
+  0% {
+    transform: scale(0) rotate(-15deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.25) rotate(4deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+.check-pop {
+  animation: checkPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spinner {
+  animation: spin 0.7s linear infinite;
+}
+
+/* ------------------------------------------------------------------
+   Skeleton loaders - shimmering placeholder blocks used while data
+   fetches, shaped like the content they stand in for.
+------------------------------------------------------------------- */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+.skeleton {
+  background-image: linear-gradient(
+    90deg,
+    rgb(226 232 240) 25%,
+    rgb(241 245 249) 37%,
+    rgb(226 232 240) 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+  border-radius: 8px;
+}
+html.dark .skeleton {
+  background-image: linear-gradient(
+    90deg,
+    rgb(39 39 42) 25%,
+    rgb(51 51 56) 37%,
+    rgb(39 39 42) 63%
+  );
+  background-size: 400% 100%;
+}
+
+/* Slide-out mobile drawer: always mounted, translated off-screen when closed
+   so both the open AND close transitions are smooth. */
+.drawer-panel {
+  transform: translateX(-100%);
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.drawer-panel.drawer-open {
+  transform: translateX(0);
+}
+.drawer-backdrop {
+  opacity: 0;
+  transition: opacity 220ms ease;
+  pointer-events: none;
+}
+.drawer-backdrop.drawer-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Print styles - used by the printable analytics report */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
+/* Waving hand emoji, used in the dashboard greeting */
+@keyframes wave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  10%, 30% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  40% { transform: rotate(10deg); }
+  50% { transform: rotate(0deg); }
+}
+.wave-emoji {
+  display: inline-block;
+  transform-origin: 70% 70%;
+  animation: wave 1.8s ease-in-out 1;
+}

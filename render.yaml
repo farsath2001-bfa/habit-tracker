@@ -1,0 +1,21 @@
+# Render Blueprint - lets you deploy the API with "New +" -> "Blueprint" in
+# the Render dashboard instead of clicking through the manual web-service
+# form. MONGO_URI, JWT_SECRET and CLIENT_URL are marked sync: false so
+# Render prompts you to paste them in rather than storing secrets here.
+services:
+  - type: web
+    name: habit-tracker-api
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLIENT_URL
+        sync: false
