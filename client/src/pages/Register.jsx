@@ -4,6 +4,8 @@ import { Eye, EyeOff, UserPlus, Sparkles, TrendingUp, Target } from 'lucide-reac
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import Spinner from '../components/common/Spinner';
+import Logo from '../components/common/Logo';
+import habitImage from '../assets/habit-image.png';
 
 const features = [
   { icon: Target, text: 'Set daily, weekday, weekend or custom goals' },
@@ -22,11 +24,15 @@ function BrandPanel() {
         }}
       />
       <div className="relative flex items-center gap-2">
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 text-lg backdrop-blur-sm">
-          ✅
-        </div>
+        <Logo size={36} />
         <span className="text-lg font-bold">HabitTracker</span>
       </div>
+
+      <img
+        src={habitImage}
+        alt=""
+        className="relative mx-auto w-48 drop-shadow-xl xl:w-56"
+      />
 
       <div className="relative">
         <h2 className="text-3xl font-bold leading-tight">
@@ -49,7 +55,7 @@ function BrandPanel() {
         </ul>
       </div>
 
-      <p className="relative text-xs text-indigo-200">© {new Date().getFullYear()} Develop By Farsath HabitTracker</p>
+      <p className="relative text-xs text-indigo-200">© {new Date().getFullYear()} HabitTracker</p>
     </div>
   );
 }
@@ -99,9 +105,7 @@ export default function Register() {
       <div className="flex w-full flex-1 items-center justify-center overflow-y-auto px-4 py-10">
         <div className="fade-in w-full max-w-sm">
           <div className="mb-8 flex flex-col items-center text-center lg:items-start lg:text-left">
-            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-600 text-2xl text-white shadow-md lg:hidden">
-              ✅
-            </div>
+            <Logo size={48} className="mb-3 shadow-md lg:hidden" />
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Create your account</h1>
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
               Start building better habits today
