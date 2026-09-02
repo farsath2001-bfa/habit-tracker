@@ -55,7 +55,7 @@ function BrandPanel() {
         </ul>
       </div>
 
-      <p className="relative text-xs text-indigo-200">© {new Date().getFullYear()} HabitTracker</p>
+      <p className="relative text-xs text-indigo-200">© {new Date().getFullYear()} Develop By Farsath HabitTracker</p>
     </div>
   );
 }
