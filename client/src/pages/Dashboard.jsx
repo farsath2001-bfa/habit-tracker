@@ -84,7 +84,7 @@ export default function Dashboard() {
 
       {!error && data && data.totalHabits === 0 && (
         <EmptyState
-          icon="🌱"
+          icon={<Sprout size={32} />}
           title="Start Building Your Better Routine"
           description="You haven't created any habits yet. Add your first habit to start tracking streaks and progress."
           action={
@@ -112,21 +112,21 @@ export default function Dashboard() {
             <StatCard
               label="Current Streak"
               value={data.currentStreak}
-              suffix={` ${data.currentStreak === 1 ? 'day' : 'days'} 🔥`}
+              suffix={` ${data.currentStreak === 1 ? 'day' : 'days'}`}
               icon={<Flame size={18} />}
               accent={STAT_COLORS.streak}
             />
             <StatCard
               label="Best Streak"
               value={data.bestStreak}
-              suffix={` ${data.bestStreak === 1 ? 'day' : 'days'} 🏆`}
+              suffix={` ${data.bestStreak === 1 ? 'day' : 'days'}`}
               icon={<Trophy size={18} />}
               accent={STAT_COLORS.best}
             />
             <StatCard
               label="Total Habits"
               value={data.totalHabits}
-              suffix=" 🌱"
+              suffix=""
               icon={<Sprout size={18} />}
               accent={STAT_COLORS.total}
             />

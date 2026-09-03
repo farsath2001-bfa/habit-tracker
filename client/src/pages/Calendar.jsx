@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CalendarDays } from 'lucide-react';
 import toast from 'react-hot-toast';
 import * as habitService from '../services/habitService';
 import * as completionService from '../services/completionService';
@@ -177,7 +177,7 @@ export default function CalendarPage() {
               />
             ) : (
               <div className="flex h-full min-h-[200px] flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-slate-300 p-6 text-center dark:border-slate-700">
-                <span className="text-2xl">📅</span>
+                <CalendarDays size={28} className="text-slate-300 dark:text-slate-600" />
                 <p className="text-sm text-slate-400 dark:text-slate-500">
                   Click a day on the calendar to see details
                 </p>

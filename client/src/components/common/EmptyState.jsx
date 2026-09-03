@@ -1,8 +1,16 @@
-export default function EmptyState({ icon = '🌱', title, description, action }) {
+import { Sprout } from 'lucide-react';
+
+/**
+ * `icon` is a lucide-react element (e.g. <Search size={32} />), not an
+ * emoji string - keeps every empty state visually consistent with the
+ * rest of the app's icon-based UI instead of relying on emoji rendering
+ * (which can look different, or missing, across devices/fonts).
+ */
+export default function EmptyState({ icon = <Sprout size={32} />, title, description, action }) {
   return (
     <div className="fade-in flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white/60 px-6 py-16 text-center dark:border-slate-700 dark:bg-slate-900/40">
       <div
-        className="mb-5 flex h-20 w-20 items-center justify-center rounded-full text-4xl"
+        className="mb-5 flex h-20 w-20 items-center justify-center rounded-full text-[var(--accent-500)]"
         style={{
           backgroundImage:
             'linear-gradient(135deg, color-mix(in srgb, var(--accent-500) 14%, transparent), color-mix(in srgb, var(--accent-500) 4%, transparent))',

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Plus, Search, ChevronLeft, ChevronRight, ChevronDown, Archive, FileDown } from 'lucide-react';
+import { Plus, Search, ChevronLeft, ChevronRight, ChevronDown, Archive, FileDown, Sprout, PauseCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import * as habitService from '../services/habitService';
 import * as completionService from '../services/completionService';
@@ -445,7 +445,7 @@ export default function Habits() {
 
       {!loading && !error && habits.length === 0 && (
         <EmptyState
-          icon="🌱"
+          icon={<Sprout size={32} />}
           title="Start Building Your Better Routine"
           description="You haven't created any habits yet. Add your first habit to start tracking streaks and progress."
           action={
@@ -462,14 +462,14 @@ export default function Habits() {
 
       {!loading && !error && habits.length > 0 && activeHabits.length === 0 && (
         <EmptyState
-          icon="⏸️"
+          icon={<PauseCircle size={32} />}
           title="All your habits are paused"
           description="Restore one from the archived list below, or create a new habit to start tracking again."
         />
       )}
 
       {!loading && !error && activeHabits.length > 0 && filteredHabits.length === 0 && (
-        <EmptyState icon="🔍" title="No habits match your filters" description="Try a different search term or filter." />
+        <EmptyState icon={<Search size={32} />} title="No habits match your filters" description="Try a different search term or filter." />
       )}
 
       {!loading && !error && filteredHabits.length > 0 && (

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { Flame, Trophy, CheckCircle2, XCircle } from 'lucide-react';
+import { Flame, Trophy, CheckCircle2, XCircle, BarChart3 } from 'lucide-react';
 import * as habitService from '../services/habitService';
 import * as completionService from '../services/completionService';
 import {
@@ -75,7 +75,7 @@ export default function Analytics() {
   if (habits.length === 0) {
     return (
       <EmptyState
-        icon="📊"
+        icon={<BarChart3 size={32} />}
         title="No analytics yet"
         description="Create a few habits and start checking them off to see your trends here."
       />

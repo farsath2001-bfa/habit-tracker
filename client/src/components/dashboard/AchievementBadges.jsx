@@ -1,4 +1,4 @@
-import { Lock } from 'lucide-react';
+import { Lock, PartyPopper } from 'lucide-react';
 import { STREAK_MILESTONES, getAchievementProgress } from '../../utils/achievements';
 import { ACCENT } from '../../utils/colors';
 import useTheme from '../../hooks/useTheme';
@@ -30,17 +30,18 @@ export default function AchievementBadges({ bestStreak = 0 }) {
           return (
             <div key={m.days} className="flex w-20 shrink-0 flex-col items-center gap-2">
               <div
-                className={`relative flex h-14 w-14 items-center justify-center rounded-full text-2xl transition-transform duration-200 ${
+                className={`relative flex h-14 w-14 items-center justify-center rounded-full transition-transform duration-200 ${
                   earned ? 'scale-100' : 'scale-95 opacity-50'
                 }`}
                 style={{
                   backgroundColor: earned ? `${accent}1f` : undefined,
                   border: earned ? `2px solid ${accent}` : undefined,
+                  color: earned ? accent : undefined,
                 }}
                 title={`${m.label}${earned ? ' - earned' : ` - reach a ${m.days}-day streak`}`}
               >
                 {earned ? (
-                  m.icon
+                  <m.icon size={22} />
                 ) : (
                   <span className="flex h-full w-full items-center justify-center rounded-full bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-600">
                     <Lock size={16} />
@@ -66,14 +67,14 @@ export default function AchievementBadges({ bestStreak = 0 }) {
       {next && (
         <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
           {next.days - bestStreak} more {next.days - bestStreak === 1 ? 'day' : 'days'} to unlock{' '}
-          <span className="font-medium text-slate-700 dark:text-slate-200">
-            {next.icon} {next.label}
+          <span className="inline-flex items-center gap-1 font-medium text-slate-700 dark:text-slate-200">
+            <next.icon size={14} /> {next.label}
           </span>
         </p>
       )}
       {!next && (
-        <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
-          🎉 You've earned every badge - incredible consistency.
+        <p className="mt-3 inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+          <PartyPopper size={14} className="text-amber-500" /> You've earned every badge - incredible consistency.
         </p>
       )}
     </div>
