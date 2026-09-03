@@ -172,6 +172,30 @@ textarea:focus-visible,
   animation: spin 0.7s linear infinite;
 }
 
+/* Waving hand emoji, used in the dashboard greeting */
+@keyframes wave {
+  0%, 60%, 100% {
+    transform: rotate(0deg);
+  }
+  10%, 30% {
+    transform: rotate(14deg);
+  }
+  20% {
+    transform: rotate(-8deg);
+  }
+  40% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+}
+.wave-emoji {
+  display: inline-block;
+  transform-origin: 70% 70%;
+  animation: wave 1.8s ease-in-out 1;
+}
+
 /* ------------------------------------------------------------------
    Skeleton loaders - shimmering placeholder blocks used while data
    fetches, shaped like the content they stand in for.
@@ -224,30 +248,12 @@ html.dark .skeleton {
   pointer-events: auto;
 }
 
-/* Print styles - used by the printable analytics report */
-@media print {
-  .no-print {
-    display: none !important;
-  }
-  body {
-    background: white !important;
-    color: black !important;
-  }
-}
-/* Waving hand emoji, used in the dashboard greeting */
-@keyframes wave {
-  0%, 60%, 100% { transform: rotate(0deg); }
-  10%, 30% { transform: rotate(14deg); }
-  20% { transform: rotate(-8deg); }
-  40% { transform: rotate(10deg); }
-  50% { transform: rotate(0deg); }
-}
-.wave-emoji {
-  display: inline-block;
-  transform-origin: 70% 70%;
-  animation: wave 1.8s ease-in-out 1;
-}
-
+/* ------------------------------------------------------------------
+   Auth pages (Login/Register) - decorative motion. Slow drifting glow
+   blobs behind the brand panel and the form panel, a gentle float on the
+   hero illustration, and a staggered entrance for the feature bullet list.
+   Kept slow/subtle so it reads as "polished" rather than distracting.
+------------------------------------------------------------------- */
 @keyframes blobDrift {
   0%, 100% {
     transform: translate(0, 0) scale(1);
@@ -300,10 +306,66 @@ html.dark .skeleton {
     animation: none !important;
   }
 }
+
+/* Dot-grid texture for the auth pages' form panel - a muted counterpart to
+   the white dots on the purple brand panel, so both halves read as one
+   design instead of the form side looking flat. Two color variants because
+   the panel itself flips from light to dark. */
 .dot-grid-subtle {
   background-image: radial-gradient(circle, rgba(100, 116, 139, 0.35) 1px, transparent 1px);
   background-size: 22px 22px;
 }
 html.dark .dot-grid-subtle {
   background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+}
+
+/* ------------------------------------------------------------------
+   PageLoader (branded full-screen loading state) - a breathing pulse on
+   the logo and three bouncing dots underneath, standing in for the plain
+   spinner wherever the whole page is waiting on something.
+------------------------------------------------------------------- */
+@keyframes loaderPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 0.92;
+  }
+}
+.loader-pulse {
+  animation: loaderPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes loaderDot {
+  0%, 80%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  40% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+.loader-dot {
+  animation: loaderDot 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-pulse,
+  .loader-dot {
+    animation: none !important;
+  }
+}
+
+/* Print styles - used by the printable analytics report */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
 }

@@ -6,7 +6,7 @@ import { buildReportRows } from '../utils/exportUtils';
 import { FullPageSpinner } from '../components/common/Spinner';
 import { formatFriendlyDate } from '../utils/dateUtils';
 import { useAuth } from '../context/AuthContext';
-
+import PageLoader from '../components/common/PageLoader';
 /** A print-friendly, dedicated view of the full habit report. Opened via window.print(). */
 export default function PrintReport() {
   const { user } = useAuth();
@@ -31,6 +31,7 @@ export default function PrintReport() {
   }, []);
 
   if (rows === null) return <FullPageSpinner />;
+    if (rows === null) return <PageLoader label="Preparing your report…" />;
 
   return (
     <div className="mx-auto max-w-3xl bg-white p-8 text-slate-900">

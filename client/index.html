@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Habit Tracker</title>
     <script>
@@ -20,9 +20,72 @@
         } catch (e) {}
       })();
     </script>
+    <style>
+      /* Pre-React boot splash, shown the instant the HTML paints (before the
+         app bundle even finishes loading) so there's no blank flash. It
+         lives inside #root and is simply overwritten the moment React's
+         createRoot().render() runs, so nothing here needs to be torn down. */
+      .boot-splash {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        background: #f8fafc;
+      }
+      html.dark .boot-splash {
+        background: #020617;
+      }
+      .boot-splash img {
+        width: 112px;
+      }
+      .boot-splash .boot-dots {
+        display: flex;
+        gap: 6px;
+      }
+      .boot-splash .boot-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 9999px;
+        background: #6366f1;
+        animation: bootDotBounce 1.2s ease-in-out infinite;
+      }
+      .boot-splash .boot-dot:nth-child(2) {
+        animation-delay: 150ms;
+      }
+      .boot-splash .boot-dot:nth-child(3) {
+        animation-delay: 300ms;
+      }
+      @keyframes bootDotBounce {
+        0%, 80%, 100% {
+          transform: translateY(0);
+          opacity: 0.4;
+        }
+        40% {
+          transform: translateY(-6px);
+          opacity: 1;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .boot-splash .boot-dot {
+          animation: none;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="boot-splash">
+        <img src="/loader-logo.png" alt="Habit Tracker" />
+        <div class="boot-dots">
+          <span class="boot-dot"></span>
+          <span class="boot-dot"></span>
+          <span class="boot-dot"></span>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
