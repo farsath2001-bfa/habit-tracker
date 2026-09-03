@@ -349,7 +349,7 @@ html.dark .dot-grid-subtle {
   }
 }
 .loader-dot {
-  animation: loaderDot 1.2s ease-in-out infinite;
+  animation: loaderDot 2.2s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
