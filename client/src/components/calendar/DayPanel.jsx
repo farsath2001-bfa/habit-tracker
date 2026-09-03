@@ -2,6 +2,7 @@ import { X, Check, Circle } from 'lucide-react';
 import { formatFriendlyDate } from '../../utils/dateUtils';
 import { resolveSeriesColor } from '../../utils/colors';
 import useTheme from '../../hooks/useTheme';
+import { HabitIconBadge } from '../../utils/habitIcons';
 
 export default function DayPanel({ dateKey, habitsForDay, percent, onClose }) {
   const { theme } = useTheme();
@@ -43,12 +44,7 @@ export default function DayPanel({ dateKey, habitsForDay, percent, onClose }) {
               className="flex items-center justify-between rounded-xl border border-slate-100 px-3 py-2.5 transition-colors duration-150 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800/50"
             >
               <div className="flex min-w-0 items-center gap-2.5">
-                <span
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm"
-                  style={{ backgroundColor: `${color}1a`, color }}
-                >
-                  {h.icon}
-                </span>
+                <HabitIconBadge emoji={h.icon} color={color} size={32} alpha="1a" />
                 <div className="min-w-0">
                   <span className="block truncate text-sm font-medium text-slate-700 dark:text-slate-200">
                     {h.name}

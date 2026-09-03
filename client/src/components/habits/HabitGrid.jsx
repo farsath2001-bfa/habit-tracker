@@ -1,7 +1,9 @@
-import { Pencil, Trash2, Archive, StickyNote } from 'lucide-react';
+// client/src/components/habits/HabitGrid.jsx
+import { Pencil, Trash2, Archive, StickyNote, Check } from 'lucide-react';
 import useTheme from '../../hooks/useTheme';
 import { resolveSeriesColor, getContrastText, SEQUENTIAL_RAMP, sequentialStepIndex } from '../../utils/colors';
 import { isHabitScheduledOnDate, toDateKey } from '../../utils/dateUtils';
+import { HabitIconBadge } from '../../utils/habitIcons';
 
 /**
  * OMR/spreadsheet-style habit tracker grid: rows are habits, columns are
@@ -74,12 +76,7 @@ export default function HabitGrid({
                 >
                   <td className="sticky left-0 z-10 min-w-[180px] bg-white px-4 py-2.5 dark:bg-slate-900">
                     <div className="flex items-center gap-2.5">
-                      <span
-                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-base"
-                        style={{ backgroundColor: `${color}1f`, color }}
-                      >
-                        {habit.icon}
-                      </span>
+                      <HabitIconBadge emoji={habit.icon} color={color} size={32} />
                       <div className="min-w-0">
                         <span className="block truncate font-medium text-slate-800 dark:text-slate-100">
                           {habit.name}
@@ -138,10 +135,10 @@ export default function HabitGrid({
                           >
                             {completed && !disabled && (
                               <span
-                                className="block text-[10px] leading-[18px]"
+                                className="flex items-center justify-center"
                                 style={{ color: getContrastText(color) }}
                               >
-                                ✓
+                                <Check size={12} strokeWidth={3} />
                               </span>
                             )}
                           </button>

@@ -1,7 +1,14 @@
 import { RotateCcw, Trash2 } from 'lucide-react';
 import { resolveSeriesColor } from '../../utils/colors';
 import useTheme from '../../hooks/useTheme';
+import { HabitIconBadge } from '../../utils/habitIcons';
 
+/**
+ * Read-only-ish list of paused habits: no grid, no toggling - just a name,
+ * icon, and two actions (Restore / Delete permanently). History for an
+ * archived habit is preserved in the database even though it's hidden from
+ * the active grid and no longer counted in streaks/analytics.
+ */
 export default function ArchivedHabitsList({ habits, onRestore, onDelete }) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
@@ -16,12 +23,7 @@ export default function ArchivedHabitsList({ habits, onRestore, onDelete }) {
           return (
             <li key={habit._id} className="flex items-center justify-between gap-3 py-2.5 first:pt-0 last:pb-0">
               <div className="flex min-w-0 items-center gap-2.5">
-                <span
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-base opacity-70"
-                  style={{ backgroundColor: `${color}1f`, color }}
-                >
-                  {habit.icon}
-                </span>
+                <HabitIconBadge emoji={habit.icon} color={color} size={32} className="opacity-70" />
                 <span className="truncate text-sm font-medium text-slate-500 dark:text-slate-400">
                   {habit.name}
                 </span>

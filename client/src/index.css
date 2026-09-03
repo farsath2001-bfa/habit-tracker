@@ -247,3 +247,63 @@ html.dark .skeleton {
   transform-origin: 70% 70%;
   animation: wave 1.8s ease-in-out 1;
 }
+
+@keyframes blobDrift {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(4%, -6%) scale(1.08);
+  }
+  66% {
+    transform: translate(-3%, 4%) scale(0.95);
+  }
+}
+.blob-drift {
+  animation: blobDrift 14s ease-in-out infinite;
+}
+.blob-drift-slow {
+  animation: blobDrift 20s ease-in-out infinite reverse;
+}
+
+@keyframes floatY {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.float-y {
+  animation: floatY 5s ease-in-out infinite;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-in-up {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob-drift,
+  .blob-drift-slow,
+  .float-y,
+  .fade-in-up {
+    animation: none !important;
+  }
+}
+.dot-grid-subtle {
+  background-image: radial-gradient(circle, rgba(100, 116, 139, 0.35) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+html.dark .dot-grid-subtle {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+}

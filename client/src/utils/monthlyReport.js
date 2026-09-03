@@ -16,6 +16,25 @@ const truncate = (str, maxChars) => {
 };
 
 /**
+ * Shortens a string with an ellipsis so its *rendered width* (in the doc's
+ * current font/size) fits maxWidth - unlike `truncate` above, which only
+ * counts characters. A char-count limit is fine for a narrow table column
+ * where every row uses the same font size, but the "Top Habit" summary
+ * tile renders whatever habit name/percent the user has at 12pt bold, and
+ * a long name in that font can blow past a fixed character budget and
+ * physically overlap the next tile. Measuring the actual width avoids that
+ * regardless of how long the habit's name is.
+ */
+const truncateToWidth = (doc, str, maxWidth) => {
+  let s = str || '';
+  if (doc.getTextWidth(s) <= maxWidth) return s;
+  while (s.length > 0 && doc.getTextWidth(`${s}…`) > maxWidth) {
+    s = s.slice(0, -1);
+  }
+  return s.length > 0 ? `${s}…` : '…';
+};
+
+/**
  * Generates a one-month PDF summary for the month currently shown on the
  * Habits page: overall completion, a "top habit", and a per-habit
  * breakdown table. Client-side only, via jsPDF - same approach as
@@ -63,8 +82,11 @@ export const generateMonthlyReportPdf = async ({
     { label: 'Days Completed', value: `${monthStats.completed} / ${monthStats.scheduled}` },
     {
       label: 'Top Habit',
+      // Not char-truncated here - truncated to the tile's real pixel width
+      // right before it's drawn below, since 12pt bold text can overflow a
+      // fixed character budget depending on the habit's name.
       value: monthStats.topHabit
-        ? truncate(`${monthStats.topHabit.habit.name} (${monthStats.topHabit.percent}%)`, 24)
+        ? `${monthStats.topHabit.habit.name} (${monthStats.topHabit.percent}%)`
         : '—',
     },
     { label: 'Habits Tracked', value: `${monthStats.perHabit.length}` },
@@ -81,7 +103,8 @@ export const generateMonthlyReportPdf = async ({
     doc.setTextColor(30);
     doc.setFontSize(12);
     doc.setFont(undefined, 'bold');
-    doc.text(String(tile.value), x + 4, y + 17);
+    const fittedValue = truncateToWidth(doc, String(tile.value), tileWidth - 8);
+    doc.text(fittedValue, x + 4, y + 17);
     doc.setFont(undefined, 'normal');
   });
   y += 34;

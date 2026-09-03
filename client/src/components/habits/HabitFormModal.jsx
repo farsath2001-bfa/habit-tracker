@@ -5,6 +5,7 @@ import Spinner from '../common/Spinner';
 import { EMOJI_OPTIONS, COLOR_OPTIONS, FREQUENCY_OPTIONS, CATEGORY_OPTIONS } from '../../utils/constants';
 import { WEEKDAY_LABELS } from '../../utils/dateUtils';
 import { HABIT_TEMPLATES } from '../../utils/habitTemplates';
+import { HabitIcon } from '../../utils/habitIcons';
 
 const emptyForm = {
   name: '',
@@ -109,7 +110,7 @@ export default function HabitFormModal({ open, onClose, onSubmit, initialHabit, 
                   onClick={() => applyTemplate(t)}
                   className="flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-600 transition-colors duration-150 hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-300 dark:hover:border-indigo-500/50 dark:hover:bg-indigo-950/40 dark:hover:text-indigo-300"
                 >
-                  <span>{t.icon}</span>
+                  <HabitIcon emoji={t.icon} size={13} />
                   {t.name}
                 </button>
               ))}
@@ -159,13 +160,13 @@ export default function HabitFormModal({ open, onClose, onSubmit, initialHabit, 
                   type="button"
                   onClick={() => setForm({ ...form, icon: emoji })}
                   aria-pressed={selected}
-                  className={`flex h-9 w-9 items-center justify-center rounded-lg text-lg transition-all duration-150 ${
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg transition-all duration-150 ${
                     selected
-                      ? 'bg-white shadow-sm ring-2 ring-indigo-500 dark:bg-slate-900'
-                      : 'bg-white/70 hover:scale-110 hover:bg-white dark:bg-slate-900/50 dark:hover:bg-slate-900'
+                      ? 'bg-white text-indigo-600 shadow-sm ring-2 ring-indigo-500 dark:bg-slate-900 dark:text-indigo-400'
+                      : 'bg-white/70 text-slate-500 hover:scale-110 hover:bg-white hover:text-slate-700 dark:bg-slate-900/50 dark:text-slate-400 dark:hover:bg-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
-                  {emoji}
+                  <HabitIcon emoji={emoji} size={18} />
                 </button>
               );
             })}

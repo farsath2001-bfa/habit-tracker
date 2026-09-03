@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, UserPlus, Sparkles, TrendingUp, Target } from 'lucide-react';
+import { Eye, EyeOff, UserPlus, Sparkles, TrendingUp, Target, Mail, Lock, User, ShieldCheck, CreditCard } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import Spinner from '../components/common/Spinner';
@@ -15,7 +15,18 @@ const features = [
 
 function BrandPanel() {
   return (
-    <div className="relative hidden w-full flex-col justify-between overflow-hidden bg-gradient-to-br from-indigo-600 via-indigo-600 to-violet-700 p-10 text-white lg:flex lg:w-[42%]">
+    <div className="relative hidden w-full flex-col justify-between overflow-hidden bg-gradient-to-br from-indigo-600 via-indigo-600 to-violet-700 p-6 text-white lg:flex lg:w-[42%] xl:p-8">
+      {/* Faint dot-grid texture for depth */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.08]"
+        style={{
+          backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
+          backgroundSize: '22px 22px',
+        }}
+      />
+      {/* Slow-drifting glow blobs - the "animation" that gives the panel life */}
+      <div className="blob-drift pointer-events-none absolute -left-16 -top-16 h-72 w-72 rounded-full bg-white/20 blur-3xl" />
+      <div className="blob-drift-slow pointer-events-none absolute -bottom-20 -right-10 h-80 w-80 rounded-full bg-fuchsia-400/25 blur-3xl" />
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.15]"
         style={{
@@ -23,19 +34,23 @@ function BrandPanel() {
             'radial-gradient(circle at 20% 20%, white 0, transparent 40%), radial-gradient(circle at 80% 70%, white 0, transparent 35%)',
         }}
       />
+
       <div className="relative flex items-center gap-2">
         <Logo size={36} />
         <span className="text-lg font-bold">HabitTracker</span>
       </div>
 
-      <img
-        src={habitImage}
-        alt=""
-        className="relative mx-auto w-48 drop-shadow-xl xl:w-56"
-      />
+      <div className="float-y relative mx-auto">
+        <div className="pointer-events-none absolute inset-2 -z-10 rounded-full bg-white/25 blur-2xl" />
+        <img
+          src={habitImage}
+          alt=""
+          className="relative mx-auto w-40 rounded-2xl shadow-2xl ring-1 ring-white/20 xl:w-48"
+        />
+      </div>
 
       <div className="relative">
-        <h2 className="text-3xl font-bold leading-tight">
+        <h2 className="text-2xl font-bold leading-tight xl:text-3xl">
           Start your streak
           <br />
           today.
@@ -43,9 +58,13 @@ function BrandPanel() {
         <p className="mt-3 max-w-xs text-sm text-indigo-100">
           Join and start building the routines that get you to your goals.
         </p>
-        <ul className="mt-8 space-y-3">
-          {features.map(({ icon: Icon, text }) => (
-            <li key={text} className="flex items-center gap-3 text-sm text-indigo-50">
+        <ul className="mt-6 space-y-2.5">
+          {features.map(({ icon: Icon, text }, i) => (
+            <li
+              key={text}
+              className="fade-in-up flex items-center gap-3 text-sm text-indigo-50"
+              style={{ animationDelay: `${200 + i * 130}ms` }}
+            >
               <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/15 backdrop-blur-sm">
                 <Icon size={16} />
               </span>
@@ -55,7 +74,7 @@ function BrandPanel() {
         </ul>
       </div>
 
-      <p className="relative text-xs text-indigo-200">© {new Date().getFullYear()} Develop By Farsath HabitTracker</p>
+      <p className="relative text-xs text-indigo-200">© {new Date().getFullYear()} HabitTracker</p>
     </div>
   );
 }
@@ -99,13 +118,20 @@ export default function Register() {
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="flex h-screen overflow-hidden bg-slate-50 dark:bg-slate-950">
       <BrandPanel />
 
-      <div className="flex w-full flex-1 items-center justify-center overflow-y-auto px-4 py-10">
-        <div className="fade-in w-full max-w-sm">
-          <div className="mb-8 flex flex-col items-center text-center lg:items-start lg:text-left">
+      <div className="relative flex w-full flex-1 items-center justify-center overflow-x-hidden overflow-y-auto px-4 py-6">
+        <div className="dot-grid-subtle pointer-events-none absolute inset-0 opacity-60" />
+        <div className="blob-drift pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-indigo-200/50 blur-3xl dark:bg-indigo-500/10" />
+        <div className="blob-drift-slow pointer-events-none absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-violet-200/50 blur-3xl dark:bg-violet-500/10" />
+
+        <div className="fade-in relative w-full max-w-sm rounded-2xl border border-slate-200/70 bg-white/80 p-6 shadow-xl shadow-slate-200/60 backdrop-blur-sm dark:border-slate-800/70 dark:bg-slate-900/60 dark:shadow-none sm:p-8">
+          <div className="mb-6 flex flex-col items-center text-center lg:items-start lg:text-left">
             <Logo size={48} className="mb-3 shadow-md lg:hidden" />
+            <span className="mb-4 hidden h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-md shadow-indigo-500/30 lg:flex">
+              <UserPlus size={20} />
+            </span>
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Create your account</h1>
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
               Start building better habits today
@@ -129,17 +155,20 @@ export default function Register() {
               <label htmlFor="name" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-200">
                 Full name
               </label>
-              <input
-                id="name"
-                type="text"
-                autoComplete="name"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className={`w-full rounded-lg border px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition-colors duration-150 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:bg-slate-900 dark:text-white dark:focus:ring-indigo-500/20 ${
-                  errors.name ? 'border-rose-400' : 'border-slate-300 dark:border-slate-700'
-                }`}
-                placeholder="Jane Doe"
-              />
+              <div className="relative">
+                <User size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                  id="name"
+                  type="text"
+                  autoComplete="name"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  className={`w-full rounded-lg border py-2.5 pl-10 pr-3 text-sm text-slate-900 shadow-sm outline-none transition-colors duration-150 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:bg-slate-900 dark:text-white dark:focus:ring-indigo-500/20 ${
+                    errors.name ? 'border-rose-400' : 'border-slate-300 dark:border-slate-700'
+                  }`}
+                  placeholder="Jane Doe"
+                />
+              </div>
               {errors.name && <p className="mt-1 text-xs text-rose-500">{errors.name}</p>}
             </div>
 
@@ -147,17 +176,20 @@ export default function Register() {
               <label htmlFor="email" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-200">
                 Email
               </label>
-              <input
-                id="email"
-                type="email"
-                autoComplete="email"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className={`w-full rounded-lg border px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition-colors duration-150 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:bg-slate-900 dark:text-white dark:focus:ring-indigo-500/20 ${
-                  errors.email ? 'border-rose-400' : 'border-slate-300 dark:border-slate-700'
-                }`}
-                placeholder="you@example.com"
-              />
+              <div className="relative">
+                <Mail size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                  id="email"
+                  type="email"
+                  autoComplete="email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  className={`w-full rounded-lg border py-2.5 pl-10 pr-3 text-sm text-slate-900 shadow-sm outline-none transition-colors duration-150 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:bg-slate-900 dark:text-white dark:focus:ring-indigo-500/20 ${
+                    errors.email ? 'border-rose-400' : 'border-slate-300 dark:border-slate-700'
+                  }`}
+                  placeholder="you@example.com"
+                />
+              </div>
               {errors.email && <p className="mt-1 text-xs text-rose-500">{errors.email}</p>}
             </div>
 
@@ -166,13 +198,14 @@ export default function Register() {
                 Password
               </label>
               <div className="relative">
+                <Lock size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="new-password"
                   value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
-                  className={`w-full rounded-lg border px-3 py-2.5 pr-10 text-sm text-slate-900 shadow-sm outline-none transition-colors duration-150 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:bg-slate-900 dark:text-white dark:focus:ring-indigo-500/20 ${
+                  className={`w-full rounded-lg border py-2.5 pl-10 pr-10 text-sm text-slate-900 shadow-sm outline-none transition-colors duration-150 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:bg-slate-900 dark:text-white dark:focus:ring-indigo-500/20 ${
                     errors.password ? 'border-rose-400' : 'border-slate-300 dark:border-slate-700'
                   }`}
                   placeholder="At least 6 characters"
@@ -193,17 +226,20 @@ export default function Register() {
               <label htmlFor="confirmPassword" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-200">
                 Confirm password
               </label>
-              <input
-                id="confirmPassword"
-                type={showPassword ? 'text' : 'password'}
-                autoComplete="new-password"
-                value={form.confirmPassword}
-                onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
-                className={`w-full rounded-lg border px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition-colors duration-150 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:bg-slate-900 dark:text-white dark:focus:ring-indigo-500/20 ${
-                  errors.confirmPassword ? 'border-rose-400' : 'border-slate-300 dark:border-slate-700'
-                }`}
-                placeholder="Re-enter your password"
-              />
+              <div className="relative">
+                <Lock size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                  id="confirmPassword"
+                  type={showPassword ? 'text' : 'password'}
+                  autoComplete="new-password"
+                  value={form.confirmPassword}
+                  onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
+                  className={`w-full rounded-lg border py-2.5 pl-10 pr-3 text-sm text-slate-900 shadow-sm outline-none transition-colors duration-150 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:bg-slate-900 dark:text-white dark:focus:ring-indigo-500/20 ${
+                    errors.confirmPassword ? 'border-rose-400' : 'border-slate-300 dark:border-slate-700'
+                  }`}
+                  placeholder="Re-enter your password"
+                />
+              </div>
               {errors.confirmPassword && (
                 <p className="mt-1 text-xs text-rose-500">{errors.confirmPassword}</p>
               )}
@@ -212,7 +248,7 @@ export default function Register() {
             <button
               type="submit"
               disabled={submitting}
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-indigo-700 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:shadow-sm"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-indigo-700 hover:shadow-md active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0 disabled:hover:shadow-sm"
             >
               {submitting ? (
                 <>
@@ -232,6 +268,21 @@ export default function Register() {
               Sign in
             </Link>
           </p>
+
+          <div className="mt-5 flex flex-wrap justify-center gap-2 lg:justify-start">
+            {[
+              { icon: Sparkles, text: 'Free forever' },
+              { icon: CreditCard, text: 'No credit card' },
+              { icon: ShieldCheck, text: 'Secure' },
+            ].map(({ icon: Icon, text }) => (
+              <span
+                key={text}
+                className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-medium text-slate-500 dark:bg-slate-800/60 dark:text-slate-400"
+              >
+                <Icon size={11} /> {text}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </div>

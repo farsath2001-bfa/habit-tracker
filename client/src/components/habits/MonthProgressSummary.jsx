@@ -1,6 +1,13 @@
 import { resolveSeriesColor } from '../../utils/colors';
 import useTheme from '../../hooks/useTheme';
+import { HabitIconBadge } from '../../utils/habitIcons';
 
+/**
+ * Overall month-progress summary for the Habits grid: a ring showing the
+ * aggregate completion % across every habit for the selected month, plus a
+ * "top habit" highlight - both computed client-side from data already
+ * loaded for the grid (no extra API calls).
+ */
 export default function MonthProgressSummary({ percent, completed, scheduled, topHabit, monthLabel }) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
@@ -45,12 +52,7 @@ export default function MonthProgressSummary({ percent, completed, scheduled, to
       <div className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
         {topHabit && topHabit.scheduled > 0 ? (
           <>
-            <span
-              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-xl"
-              style={{ backgroundColor: `${topColor}1f`, color: topColor }}
-            >
-              {topHabit.habit.icon}
-            </span>
+            <HabitIconBadge emoji={topHabit.habit.icon} color={topColor} size={48} />
             <div className="min-w-0">
               <p className="text-xs font-medium uppercase tracking-wide text-slate-400">Top habit this month</p>
               <p className="truncate text-sm font-semibold text-slate-800 dark:text-slate-100">

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Flame, Trophy, CheckCircle2, XCircle, BarChart3 } from 'lucide-react';
+import { HabitIcon } from '../utils/habitIcons';
 import * as habitService from '../services/habitService';
 import * as completionService from '../services/completionService';
 import {
@@ -156,7 +157,7 @@ export default function Analytics() {
                         style={{ backgroundColor: resolveSeriesColor(h.color, isDark) }}
                         aria-hidden="true"
                       />
-                      {h.icon} {h.name}
+                      <HabitIcon emoji={h.icon} size={14} className="shrink-0 text-slate-400 dark:text-slate-500" /> {h.name}
                     </span>
                   </td>
                   <td className="py-2.5 pr-4 text-slate-600 dark:text-slate-300">{h.currentStreak}</td>

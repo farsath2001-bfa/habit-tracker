@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 import Modal from '../common/Modal';
 import Spinner from '../common/Spinner';
 import { formatFriendlyDate } from '../../utils/dateUtils';
+import { HabitIcon } from '../../utils/habitIcons';
 
 const MAX_LENGTH = 500;
 
@@ -39,7 +40,7 @@ export default function NoteModal({ open, onClose, onSave, target, readOnly, sav
     >
       <div className="space-y-3">
         <div className="flex items-center gap-2.5">
-          <span className="text-lg">{target.habit.icon}</span>
+          <HabitIcon emoji={target.habit.icon} size={20} className="text-slate-500 dark:text-slate-400" />
           <div>
             <p className="text-sm font-medium text-slate-800 dark:text-slate-100">
               {target.habit.name}
